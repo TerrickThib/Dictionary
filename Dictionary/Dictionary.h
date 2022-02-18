@@ -54,10 +54,11 @@ public:
 
 	bool remove(const TKey key, TValue& value);//Removes the item that has the given key and gives back the value of the item that was removed
 
-	int getCount() const;//gets the number of items in the dictionary
+	int getCount() const {return m_count};//gets the number of items in the dictionary
 
-	const operator = (const Dictionary<TKey, TValue>other) Dictionary<TKey, TValue>&;
+	const Dictionary<TKey, TValue>& operator =(const Dictionary<TKey, TValue> other);//copies the values of one dictnary on to another
 
+	TValue operator [](const TKey key);
 private:
 
 	struct Item
@@ -131,4 +132,81 @@ inline bool Dictionary<TKey, TValue>::tryGetValue(const TKey key, const TValue& 
 		}
 	}
 	return false;
+}
+
+template<typename TKey, typename TValue>
+inline void Dictionary<TKey, TValue>::additem(const TKey& key, const TValue& value)
+{
+	//Creates a temp aray with 1 more than normal arrray
+	Item* tempArray = new Item[getCount() + 1];
+
+	//Copys all the values from old array to new
+	for (int i = 0; i < getCount(); i++)
+	{
+		tempArray[i].itemKey = m_items[i].itemKey;
+		tempArray[i].itemValue = m_items[i].itemValue;
+	}
+
+	tempArray[m_count].itemKey = key; //Adds key to temp array
+	tempArray[m_count].itemValue = value;//Adds value to temp array
+
+	delete[] m_items;
+	m_items = tempArray;
+	m_count++;
+}
+
+template<typename TKey, typename TValue>
+inline bool Dictionary<TKey, TValue>::remove(const TKey key)
+{
+	if (!containsKey(key))
+	{
+		return false;
+	}
+
+	//Creates a item pointer 1 smaller
+	Item* tempArray = new Item[getCount() - 1];
+
+	//Gets length of aray
+	for (int i = 0; i < getCount() - 1; i++)
+	{
+		if (m_items[i].itemKey != key)
+		{
+			tempArray[i] = m_items[i];//temp aray values equel items values
+		}
+	}
+
+	delete[] m_items;
+	m_items = tempArray;
+	m_count--;
+	return true;
+}
+
+template<typename TKey, typename TValue>
+inline bool Dictionary<TKey, TValue>::remove(const TKey key, TValue& value)
+{
+	if (!containsKey(key))
+	{
+		return false;
+	}
+
+	//Creates a item pointer 1 smaller
+	Item* tempArray = new Item[getCount() - 1];
+
+	//Gets length of aray
+	for (int i = 0; i < getCount() - 1; i++)
+	{
+		if (m_items[i].itemKey != key)
+		{
+			tempArray[i] = m_items[i];//temp aray values equel items values
+		}
+		else
+		{
+			value = m_items[i].itemValue;
+		}
+	}
+
+	delete[] m_items;
+	m_items = tempArray;
+	m_count--;
+	return true;
 }
