@@ -87,13 +87,43 @@ inline void Dictionary<TKey, TValue>::clear()
 }
 
 template<typename TKey, typename TValue>
+inline bool Dictionary<TKey, TValue>::containsKey(const TKey object) const
+{
+	//Goes through list
+	for (int i = 0; i < getCount(); i++)
+	{
+		//If the key is the same as object
+		if (m_items[i].itemKey == object)
+		{
+			return true;
+		}
+		return false;
+	}
+}
+
+template<typename TKey, typename TValue>
+inline bool Dictionary<TKey, TValue>::containsValue(const TValue object) const
+{
+	//Goes through list
+	for (int i = 0; i < getCount(); i++)
+	{
+		//If the key is the same as object
+		if (m_items[i].itemKey == object)
+		{
+			return true;
+		}
+		return false;
+	}
+}
+
+template<typename TKey, typename TValue>
 inline bool Dictionary<TKey, TValue>::tryGetValue(const TKey key, const TValue& value) const
 {
 	//Goes Through list
 	for (int i = 0; i < getCount(); i++)
 	{
 		//If the key is the same as the given key
-		if (m_items[i].itemkey == key)
+		if (m_items[i].itemKey == key)
 		{
 			//set value equel to to the keys value
 			value = m_items[i].itemValue;
