@@ -7,13 +7,13 @@ public:
 	Dictionary<TKey, TValue>();
 
 	//Copys the vales of another dictnary
-	Dictionary<TKey, TValue>(const Dictionary<TKey, TValue>& other) 
+	Dictionary<TKey, TValue>(const Dictionary<TKey, TValue>& other)
 	{
 		*this = other;
 	}
 
 	//Clears the dictionary
-	~Dictionary<TKey, TValue>({ clear(); })
+	~Dictionary<TKey, TValue>() { clear(); }
 
 	/// <summary>
 	/// deletes all items in dictionary
@@ -62,12 +62,43 @@ private:
 
 	struct Item
 	{
-		TKey itemkey;
+		TKey itemKey;
 		TValue itemValue;
 	};
 
 	Item* m_items = nullptr;
 	int m_count = 0;
-	
+
 };
 
+template<typename TKey, typename TValue>
+inline Dictionary<TKey, TValue>::Dictionary()
+{
+	m_items = nullptr;
+	m_count = 0;
+}
+
+template<typename TKey, typename TValue>
+inline void Dictionary<TKey, TValue>::clear()
+{
+	delete[] m_items;
+	m_items = nullptr;
+	m_count = 0;
+}
+
+template<typename TKey, typename TValue>
+inline bool Dictionary<TKey, TValue>::tryGetValue(const TKey key, const TValue& value) const
+{
+	//Goes Through list
+	for (int i = 0; i < getCount(); i++)
+	{
+		//If the key is the same as the given key
+		if (m_items[i].itemkey == key)
+		{
+			//set value equel to to the keys value
+			value = m_items[i].itemValue;
+			return true;
+		}
+	}
+	return false;
+}
