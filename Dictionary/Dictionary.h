@@ -40,13 +40,7 @@ public:
 	/// <param name="key"></param>
 	/// <param name="value"></param>
 	/// <returns></returns>
-	bool tryGetValue(const TKey key, const TValue& value)const;
-
-	struct Item
-	{
-		TKey itemKey;
-		TValue itemValue;
-	};
+	bool tryGetValue(const TKey key,TValue& value)const;
 
 	void additem(const TKey& key, const TValue& value);//creates a new item with the given key and value and adds it to the dictionary
 
@@ -54,7 +48,7 @@ public:
 
 	bool remove(const TKey key, TValue& value);//Removes the item that has the given key and gives back the value of the item that was removed
 
-	int getCount() const {return m_count};//gets the number of items in the dictionary
+	int getCount() const { return m_count; }//gets the number of items in the dictionary
 
 	const Dictionary<TKey, TValue>& operator =(const Dictionary<TKey, TValue> other);//copies the values of one dictnary on to another
 
@@ -109,7 +103,7 @@ inline bool Dictionary<TKey, TValue>::containsValue(const TValue object) const
 	for (int i = 0; i < getCount(); i++)
 	{
 		//If the key is the same as object
-		if (m_items[i].itemKey == object)
+		if (m_items[i].itemValue == object)
 		{
 			return true;
 		}
@@ -118,7 +112,7 @@ inline bool Dictionary<TKey, TValue>::containsValue(const TValue object) const
 }
 
 template<typename TKey, typename TValue>
-inline bool Dictionary<TKey, TValue>::tryGetValue(const TKey key, const TValue& value) const
+inline bool Dictionary<TKey, TValue>::tryGetValue(const TKey key,TValue& value) const
 {
 	//Goes Through list
 	for (int i = 0; i < getCount(); i++)
@@ -209,4 +203,29 @@ inline bool Dictionary<TKey, TValue>::remove(const TKey key, TValue& value)
 	m_items = tempArray;
 	m_count--;
 	return true;
+}
+
+template<typename TKey, typename TValue>
+inline const Dictionary<TKey, TValue>& Dictionary<TKey, TValue>::operator=(const Dictionary<TKey, TValue> other)
+{
+	clear();//Deletes all items in dictionary  
+
+	for (int i = 0; i < other.getCount(); i++)//Iterarates through wile less than count
+	{
+		m_items[i] = other.m_items[i];//Copys dictionarys data into this one
+	}
+
+	m_count = other.getCount();//Copys the item count
+
+	return *this;
+}
+
+template<typename TKey, typename TValue>
+inline TValue Dictionary<TKey, TValue>::operator[](const TKey key)
+{
+	TValue value;
+
+	tryGetValue(key, value);
+
+	return value;
 }
