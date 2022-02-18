@@ -5,8 +5,16 @@ class Dictionary
 {
 public:
 	Dictionary<TKey, TValue>();
-	Dictionary<TKey, TValue>(const Dictionary<TKey, TValue>& other);
-	~Dictionary<TKey, TValue>();
+
+	//Copys the vales of another dictnary
+	Dictionary<TKey, TValue>(const Dictionary<TKey, TValue>& other) 
+	{
+		*this = other;
+	}
+
+	//Clears the dictionary
+	~Dictionary<TKey, TValue>({ clear(); })
+
 	/// <summary>
 	/// deletes all items in dictionary
 	/// </summary>
@@ -25,6 +33,13 @@ public:
 	/// <param name="object"></param>
 	/// <returns></returns>
 	bool containsValue(const TValue object) const;
+
+	/// <summary>
+	/// Trys to find the item that matches the given key and spit back the value
+	/// </summary>
+	/// <param name="key"></param>
+	/// <param name="value"></param>
+	/// <returns></returns>
 	bool tryGetValue(const TKey key, const TValue& value)const;
 
 	struct Item
@@ -33,14 +48,26 @@ public:
 		TValue itemValue;
 	};
 
-	void additem(const TKey& key, const TValue& value);
-	bool remove(const TKey key);
-	bool remove(const TKey key, TValue& value);
-	int getCount() const;
+	void additem(const TKey& key, const TValue& value);//creates a new item with the given key and value and adds it to the dictionary
+
+	bool remove(const TKey key);//Removes the item that has the given key
+
+	bool remove(const TKey key, TValue& value);//Removes the item that has the given key and gives back the value of the item that was removed
+
+	int getCount() const;//gets the number of items in the dictionary
+
 	const operator = (const Dictionary<TKey, TValue>other) Dictionary<TKey, TValue>&;
 
 private:
-	m_items Item<TKey, TValue>* = nullptr;
-	m_count int = 0;
+
+	struct Item
+	{
+		TKey itemkey;
+		TValue itemValue;
+	};
+
+	Item* m_items = nullptr;
+	int m_count = 0;
+	
 };
 
