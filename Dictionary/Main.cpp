@@ -16,5 +16,13 @@ int main()
 	{
 		std::cout << "You did it" << std::endl;
 	}
-	system("pause");
+	/*system("pause");*/
+	int taco = 0;
+	testDictionary.remove("E", taco);
+	std::cout << taco;
+	Dictionary<const char*, int> newDictionary = Dictionary<const char*, int>();
+
+	newDictionary = testDictionary;
+
+
 }

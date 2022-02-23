@@ -9,7 +9,7 @@ public:
 	//Copys the vales of another dictnary
 	Dictionary<TKey, TValue>(const Dictionary<TKey, TValue>& other)
 	{
-		*this = other;
+		this = other;//Manually copy all the values and get rid of this = other
 	}
 
 	//Clears the dictionary
@@ -144,7 +144,7 @@ inline void Dictionary<TKey, TValue>::additem(const TKey& key, const TValue& val
 	tempArray[m_count].itemKey = key; //Adds key to temp array
 	tempArray[m_count].itemValue = value;//Adds value to temp array
 
-	delete[] m_items;
+	/*delete[] m_items;*/
 	m_items = tempArray;
 	m_count++;
 }
