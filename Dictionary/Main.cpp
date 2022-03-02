@@ -50,5 +50,6 @@ int main()
 	
 	newDictionary.remove("T", taco);
 	std::cout << taco;
+	system("pause");
 	return 0;
 }
