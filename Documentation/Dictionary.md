@@ -21,6 +21,7 @@ The creation of a dictinary that stores items wich can be called from a char
 1. *System Architecture*   
 
 Uses Functions and dictionarys to excute project susfully  
+Test if you can create a dictinary that holds items using a key and a value and if you can locat those as well as copy dictinarys to one another or if you can remove items from it using keys or values
 
 2. *Object Information*  
 - **File Name:** Dictionary.h  

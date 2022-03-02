@@ -33,7 +33,7 @@ int main()
 	}
 	else
 	{
-		std::cout << "Your mom doesnt love you" << std::endl;
+		std::cout << "It failed" << std::endl;
 	}
 	system("pause");
 
