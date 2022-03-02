@@ -9,7 +9,12 @@ public:
 	//Copys the vales of another dictnary
 	Dictionary<TKey, TValue>(const Dictionary<TKey, TValue>& other)
 	{
-		this = other;//Manually copy all the values and get rid of this = other
+		clear();//Clears the data from the dictionary
+		for (int i = 0; i < other.getCount(); i++)
+		{
+			additem(other.m_items[i].itemKey, other.m_items[i].itemValue);//adds item at the index of i
+		}
+		m_count = other.getCount();
 	}
 
 	//Clears the dictionary
@@ -92,8 +97,8 @@ inline bool Dictionary<TKey, TValue>::containsKey(const TKey object) const
 		{
 			return true;
 		}
-		return false;
 	}
+	return false;
 }
 
 template<typename TKey, typename TValue>
@@ -107,8 +112,8 @@ inline bool Dictionary<TKey, TValue>::containsValue(const TValue object) const
 		{
 			return true;
 		}
-		return false;
 	}
+	return false;
 }
 
 template<typename TKey, typename TValue>
@@ -144,7 +149,7 @@ inline void Dictionary<TKey, TValue>::additem(const TKey& key, const TValue& val
 	tempArray[m_count].itemKey = key; //Adds key to temp array
 	tempArray[m_count].itemValue = value;//Adds value to temp array
 
-	/*delete[] m_items;*/
+	delete[] m_items;
 	m_items = tempArray;
 	m_count++;
 }
@@ -212,7 +217,8 @@ inline const Dictionary<TKey, TValue>& Dictionary<TKey, TValue>::operator=(const
 
 	for (int i = 0; i < other.getCount(); i++)//Iterarates through wile less than count
 	{
-		m_items[i] = other.m_items[i];//Copys dictionarys data into this one
+		//m_items[i] = other.m_items[i];//Copys dictionarys data into this one
+		additem(other.m_items[i].itemKey, other.m_items[i].itemValue);
 	}
 
 	m_count = other.getCount();//Copys the item count
